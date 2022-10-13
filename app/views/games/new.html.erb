@@ -1,0 +1,20 @@
+<div class="container-md my-5 d-flex flex-column align-items-center">
+  <h1>New game</h1>
+
+  <div class="letters-container">
+    <% @letters.each do |letter| %>
+      <div class="letter-card">
+        <p><%= letter.join %></p>
+      </div>
+    <% end %>
+  </div>
+  <div class="form-container w-50">
+    <form class="d-flex flex-row" action="/score" method="post" data-turbo="false">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+      <input type="hidden" name="current_game" value="<%= @letters.join.downcase %>">
+      <input class="form-control mb-2" type="text" name="answer" value="<%= params[:answer] %>" placeholder="What is the longest word you can find?">
+      <input class="btn btn-secondary input-group-append mb-2" type="submit" value="Play">
+    </form>
+  </div>
+
+</div>

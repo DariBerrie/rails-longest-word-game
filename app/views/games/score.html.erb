@@ -1,0 +1,19 @@
+<div class="container-md my-5 d-flex flex-column align-items-center">
+  <h1>Result</h1>
+  <% URI.open(@api_url) do |hash| dictionary = JSON.parse(hash.read) %>
+    <% if params[:answer].chars.all? { |letter| params[:answer].downcase.count(letter) <= params["current_game"].count(letter) }%>
+      <% if dictionary["found"] == false || params[:answer].length <= 1%>
+        <p class="text-body fs-3 fw-normal"><%= "Sorry, but "%><strong><%= "#{params[:answer]}" %></strong>
+        <%=  "does not seem to be a valid English word..." %></p>
+      <% elsif dictionary["found"] == true %>
+        <p class="text-body fs-3 fw-normal"><%= "Congratulations! " %><strong><%= "#{params[:answer]}" %></strong>
+        <%= "is a valid English word!" %></p>
+      <% end %>
+    <% else %>
+      <p class="text-body fs-3 fw-normal"><%= "Sorry, but "%><strong><%= "#{params[:answer]}" %></strong>
+      <%= "can't be built out of #{params["current_game"].upcase}" %></p>
+    <% end %>
+  <% end %>
+
+  <%= link_to "Play again", new_path %>
+</div>
